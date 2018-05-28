@@ -8,28 +8,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login </title>
   
-    <script src="scripts/login.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <script type="text/javascript">
+        function signin() {
+            $.ajax({
+                url: 'api/login.php',
+                type: 'POST',
+                data: {
+                    username: $('#usernameInput').value,
+                    password: ('#passwordInput').value
+                },
+            })
+            .done(function(data) {
+                window.location.replace('suggestions.html');
+            })
+            .fail(function(data) {
+                $('#errorMessage').css('visibility', 'visible');
+            });
+        }
+    </script>
     <link rel="stylesheet" href="styles/login.css">   
   </head>
 
-  <body onload="init()">
-
+  <body>
   <div class="wrap">
         <div class="avatar">
-      <img src="images/logo-small.jpg">
+            <img src="images/logo-small.jpg">
         </div>
-        <input id="emailId" type="text" placeholder="username" required>
+        <div class="error" id="errorMessage">
+            <br>
+            Ошибочка...
+        </div>
+        <input id="usernameInput" type="text" placeholder="username" required>
         <div class="bar">
             <i></i>
         </div>
-        <input id="passwordId" type="password" placeholder="password" required>
+        <input id="passwordInput" type="password" placeholder="password" required>
         <button onclick="signin()">Войти</button>
     </div>
-
-    
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-    
+   
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {
