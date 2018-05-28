@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2015, vatriume.kz - ANUAR SERIKOV, All rights reserved.
+-->
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login </title>
+  
+    <script src="scripts/login.js"></script>
+    <link rel="stylesheet" href="styles/login.css">   
+  </head>
+
+  <body onload="init()">
+
+  <div class="wrap">
+        <div class="avatar">
+      <img src="images/logo-small.jpg">
+        </div>
+        <input id="emailId" type="text" placeholder="username" required>
+        <div class="bar">
+            <i></i>
+        </div>
+        <input id="passwordId" type="password" placeholder="password" required>
+        <button onclick="signin()">Войти</button>
+    </div>
+
+    
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+    
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter29190110 = new Ya.Metrika({
+                    id:29190110,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true,
+                    webvisor:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/29190110" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+  </body>
+</html>
