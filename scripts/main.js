@@ -11,9 +11,6 @@ function init() {
   radio2 = document.getElementById("radio2");
   radio3 = document.getElementById("radio3");
   radio4 = document.getElementById("radio4");
-  
-  // Get a reference to the database service
-  database = firebase.database();      
 }
 
 function saveSuggestion() {
@@ -32,12 +29,14 @@ function saveSuggestion() {
 
   if (suggestionText.length > 0) {
     var mDate = new Date();
-    var newRef = database.ref('suggestions/').push();
-    newRef.set({
-      "text" : suggestionText,
-      "destination" : destination,
-      "timestamp" : mDate.toString(),
-      "status" : 0
+    $.ajax({
+      url: 'api/store_suggestion.php',
+      type: 'GET',
+      data: {
+        text : suggestionText,
+        destination : destination,
+        timestamp : mDate.toString()
+      }
     });
     
     suggestionLabel.value = "";
