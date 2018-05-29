@@ -29,4 +29,24 @@ function authenticate_user($username, $password) {
     }
 }
 
+function is_user_authenticated() {
+    if (!isset($_COOKIE[$USERNAME_COOKIE_KEY])) {
+        return false;
+    }
+    $username = $_COOKIE[$USERNAME_COOKIE_KEY];
+
+    if (!isset($_COOKIE[$AUTH_TOKEN_COOKIE_KEY])) {
+        return false;
+    }
+    $auth_token = $_COOKIE[$AUTH_TOKEN_COOKIE_KEY];
+
+    if (!array_key_exists($username, $admin_credentials)) {
+        return false;
+    }
+
+    $password = $admin_credentials[$username];
+
+    return create_auth_token($username, $password) === $auth_token;
+}
+
 ?>

@@ -9,11 +9,27 @@
     <title>Suggestions </title>
     <script src="scripts/suggestions.js"></script>
     <script src="scripts/clipboard.min.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+
+    <script src="scripts/mustache.min.js"></script>
+    <script id="suggestionTemplate" type="x-tmpl-mustache">
+        <div class="{{destination}}" id="{{key}}">
+            {{text}} <br/>
+            <span class="label label-info">{{timestamp}}</span>
+            <button class="btn btn-danger" onclick="removeSuggestion('{{key}}')">
+                Стереть
+            </button>
+            <buton class="btn btn-info" data-clipboard-demo 
+                   data-clipboard-action="copy" data-clipboard-text="{{copyText}}">
+                Скопировать
+            </button>
+        </div>
+    </script>
 
     <link rel="stylesheet" type="text/css" href="styles/suggestions.css">
   </head>
 
-  <body onload="init()">
+  <body onload="loadSuggestions()">
 
   <center><button class="removeAll" onclick="deleteAllNafig()">Удалить все к чертям!</button></center>
 
@@ -22,12 +38,7 @@
 
   <div class="suggestionsMain" id="suggestionsDivId"></div>
 
-    
-       
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-
-    
+   
     <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
     (function (d, w, c) {

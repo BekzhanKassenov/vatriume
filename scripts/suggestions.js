@@ -1,111 +1,65 @@
-var database;
-var suggestionsDiv;
-var loadingIndicator;
-var suggestions = [];
+function loadSuggestions() {
+	$('#suggestionLoaderInfo').text("Загружаю, подождите...");
+	
+	// Cache Mustache template
+	var template = $('#suggestionTemplate').html();
+	Mustache.parse(template);
 
-function init() {
-	suggestionsDiv = document.getElementById("suggestionsDivId");
-	loadingIndicator = document.getElementById("suggestionLoaderInfo");
-	// Get a reference to the database service
-  	database = firebase.database();
-	loadingIndicator.innerHTML = "Загружаю, подождите..";
+	$.ajax({
+		url: 'api/load_suggestions.php',
+		type: 'GET'
+	}).done(function(data) {
+		var found = false;
+		for (suggestion in data) {
+			displayNext(suggestion);
+			found = true;
+		}
 
-  var clipboard = new Clipboard('.btn');
-
-clipboard.on('success', function(e) {
-    console.info('Action:', e.action);
-    console.info('Text:', e.text);
-    console.info('Trigger:', e.trigger);
-
-    e.clearSelection();
-});
-
-clipboard.on('error', function(e) {
-    console.error('Action:', e.action);
-    console.error('Trigger:', e.trigger);
-});
-
-  	firebase.auth().onAuthStateChanged(function(user) {
-  		if (user) {
-    		// User is signed in.
-    		loadingIndicator.style.visibility = "hidden";
-    		showSuggestions();
-  		} else {
-    		// No user is signed in.
-    		window.location = "login.html";
-  		}
-	}); 
-
-
-}
-
-function showSuggestions() {
-	var suggestionsRef = firebase.database().ref('suggestions');
-	var pusto = true;
-	suggestionsRef.once('value', function(snapshot) {
-		snapshot.forEach(function(childSnapshot) {
-    		//var childKey = childSnapshot.key();
-    		var nextSuggestion = childSnapshot.val();
-    		//suggestions.push(nextSuggestion.text);
-    		if (nextSuggestion.status == "0") {
-    			pusto = false;
-    			displayNext(nextSuggestion.text, childSnapshot.key, nextSuggestion.timestamp, nextSuggestion.destination);
-    		}
-  		});
+		if (!found) {
+			$('#suggestionLoaderInfo').text('Пусто :(')
+			$('#suggestionLoaderInfo').show();
+		} else {
+			$('#suggestionLoaderInfo').hide()
+		}
+	}).fail(function (error) {
+		if (error.status == 401) {
+			window.location.replace('login.html');
+		}
 	});
+}
 
-	if (pusto == true) {
-		loadingIndicator.style.visibility = "visible";
-		loadingIndicator.innerHTML = "Пусто :(";
-	} else {
-		loadingIndicator.style.visibility = "hidden";
+function displayNext(data) {
+	$('#suggestionLoaderInfo').hide()
+
+	data.copyText = data.text.replace(new RegExp("\"", 'g'), "\'");
+	data.text = data.text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+	if (["vatriume", "ladies", "market", "tumba"].indexOf(data.destination) == -1) {
+		data.destination = "vatriume";
 	}
+
+	$("#suggestionsDivId").append(Mustache.render( $('#suggestionTemplate').html(), data));
 }
 
-function displayNext(text, key, timestamp, destination) {
-	loadingIndicator.style.visibility = "hidden";
-	var textik = text;
-	text = text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-
-  console.log(destination);
-
-  if (destination != "vatriume" && destination != "ladies" && destination != "market" && destination != "tumba") {
-    destination = "vatriume";
-  }
-
-  var copyText = textik.replace(new RegExp("\"", 'g'), "\'");
-
-	suggestionsDiv.innerHTML += "<div class='"+destination+"' id=\"" + key + "\">" 
-	+ text
-	+ "<br><span class='label label-info'>" + timestamp + "</span>"
-	+ "<button class='btn btn-danger' onclick='removeSuggestion(\"" + key + "\")'>Стереть</button>"
-  + "<buton class='btn btn-info' data-clipboard-demo data-clipboard-action='copy' data-clipboard-text=\""+copyText+"\">Скопировать</button>"
-	+ "</div>";
-}
-
-
-function removeSuggestion(key) {
-	var suggestionsRef = firebase.database().ref('suggestions/' + key);
-	var updates = {};
-  	updates["/status"] = "1";
-  	suggestionsRef.update(updates);
-
-  	var well = document.getElementById(key);
-  	if (well) {
-  		well.style.display = 'none';
-  	}
+function removeSuggestion(keyToDelete) {
+	$.ajax({
+		url: 'api/remove_suggestions.php',
+		type: 'GET',
+		data: {
+			key: keyToDelete
+		}
+	}).done(function(data) {
+		$('#' + keyToDelete).hide();
+	});
 }
 
 function deleteAllNafig() {
-	var suggestionsRef = firebase.database().ref('suggestions');
-	suggestionsRef.once('value', function(snapshot) {
-		snapshot.forEach(function(childSnapshot) {
-    		//var childKey = childSnapshot.key();
-    		var nextSuggestion = childSnapshot.val();
-    		//suggestions.push(nextSuggestion.text);
-    		if (nextSuggestion.status == "0") {
-    			removeSuggestion(childSnapshot.key);
-    		}
-  		});
+	$.ajax({
+		url: 'api/remove_suggestions.php',
+		type: 'GET',
+		data: {
+			delete_all: true
+		}
+	}).done(function(data) {
+		window.location.replace('suggestions.html');
 	});
 }
