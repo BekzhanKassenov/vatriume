@@ -1,17 +1,17 @@
 function saveSuggestion() {
-  var suggestionText = suggestionLabel.value;
+  var suggestionText = $('#suggestionLabelId').val();
   var destination = 'unknown';
 
-  if ($('#radio1').checked) {
+  if ($('#radio1').is(':checked')) {
     destination = 'vatriume';
   }
-  else if ($('#radio2').checked) {
+  else if ($('#radio2').is(':checked')) {
     destination = 'market';
   }
-  else if ($('#radio3').checked) {
+  else if ($('#radio3').is(':checked')) {
     destination = 'ladies';
   }
-  else if ($('#radio4').checked) {
+  else if ($('#radio4').is(':checked')) {
     destination = 'tumba';
   }
 
@@ -25,13 +25,13 @@ function saveSuggestion() {
         destination: destination,
         timestamp: mDate.toString()
       }
+    }).done(function(data) {
+      $('#suggestionLabelId').val('');
+      $('#suggestionLabelId').hide();
+      $('#submitButtonId').hide();
+      $('#repeatLabelId').show();
+      $('#repeatButtonId').show();
     });
-
-    $('#suggestionLabelId').text('');
-    $('#suggestionLabelId').hide();
-    $('#submitButtonId').hide();
-    $('#repeatLabelId').show();
-    $('#repeatButtonId').show();
   }
 }
 

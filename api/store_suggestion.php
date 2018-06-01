@@ -13,7 +13,7 @@ $text = $db_conn->real_escape_string($_GET['text']);
 $destination = $db_conn->real_escape_string($_GET['destination']);
 $timestamp = $db_conn->real_escape_string($_GET['timestamp']);
 
-$statement = "INSERT INTO suggestions(text, destination, timestamp) " +
+$statement = "INSERT INTO suggestions(text, destination, timestamp) " .
              "VALUES ($text, $destination, $timestamp)";
 $db_conn->query($statement);
 $db_conn->close();
