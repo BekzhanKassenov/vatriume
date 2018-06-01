@@ -13,10 +13,10 @@
 
     <script src="scripts/mustache.min.js"></script>
     <script id="suggestionTemplate" type="x-tmpl-mustache">
-        <div class="{{destination}}" id="{{key}}">
+        <div class="{{destination}}" id="{{id}}">
             {{text}} <br/>
             <span class="label label-info">{{timestamp}}</span>
-            <button class="btn btn-danger" onclick="removeSuggestion('{{key}}')">
+            <button class="btn btn-danger" onclick="removeSuggestion('{{id}}')">
                 Стереть
             </button>
             <buton class="btn btn-info" data-clipboard-demo 

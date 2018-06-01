@@ -16,7 +16,7 @@ $rows = $db_conn->query($statement);
 $response = [];
 while ($row = $rows->fetch_assoc()) {
     array_push($response, [
-        'key' => $row['key'],
+        'id' => $row['id'],
         'text' => $row['text'],
         'timestamp' => $row['timestamp'],
         'destination' => $row['destination']

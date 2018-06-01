@@ -40,15 +40,15 @@ function displayNext(data) {
   $("#suggestionsDivId").append(Mustache.render($('#suggestionTemplate').html(), data));
 }
 
-function removeSuggestion(keyToDelete) {
+function removeSuggestion(idToDelete) {
   $.ajax({
     url: 'api/remove_suggestions.php',
     type: 'GET',
     data: {
-      key: keyToDelete
+      id: idToDelete
     }
   }).done(function(data) {
-    $('#' + keyToDelete).hide();
+    $('#' + idToDelete).hide();
   });
 }
 

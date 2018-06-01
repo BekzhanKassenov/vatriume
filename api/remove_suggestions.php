@@ -8,7 +8,7 @@ if (!is_user_authenticated()) {
     exit;
 }
 
-if (!isset($_GET['key']) || !isset($_GET['delete_all'])) {
+if (!isset($_GET['id']) || !isset($_GET['delete_all'])) {
     header("HTTP/1.1 400 Bad Request");
     exit;
 }
@@ -19,8 +19,8 @@ $statement = null;
 if (isset($_GET['delete_all'])) {
     $statement = "TRUNCATE suggestions";
 } else {
-    $key = $db_conn->real_escape_string($_GET['key']);
-    $statement = "DELETE FROM suggestions WHERE key='$key'";
+    $id = $db_conn->real_escape_string($_GET['id']);
+    $statement = "DELETE FROM suggestions WHERE id='$id'";
 }
 
 if ($db_conn->query($statement) !== TRUE) {
