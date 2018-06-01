@@ -1,26 +1,19 @@
 <?php
 
 require 'auth.php';
+require 'db.php';
 
 if (!is_user_authenticated()) {
     header("HTTP/1.1 401 Unauthorized");
     exit;
 }
 
-require 'secret.php';
-
 if (!isset(_GET['key']) || !isset(_GET['delete_all'])) {
     header("HTTP/1.1 400 Bad Request");
     exit;
 }
 
-// All database credentials are defined in secret.php
-$db_conn = new mysqli($db_server, $db_username, $db_password);
-
-// Check connection
-if ($db_conn->connect_error) {
-    die('Database is unavailable');
-}
+$db_conn = connect_to_db_or_die();
 
 $statement = null;
 if (isset(_GET['delete_all'])) {
@@ -37,5 +30,4 @@ if ($db_conn->query($statement) !== TRUE) {
 }
 
 $db_conn->close();
-exit;
 ?>

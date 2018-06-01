@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  Copyright 2015, vatriume.kz - ANUAR SERIKOV, All rights reserved.
+  Copyright 2018, vatriume.kz - BEKZHAN KASSENOV, All rights reserved.
 -->
 <html >
   <head>
@@ -10,22 +10,22 @@
   
     <script src="scripts/jquery.min.js"></script>
     <script type="text/javascript">
-        function signin() {
-            $.ajax({
-                url: 'api/login.php',
-                type: 'POST',
-                data: {
-                    username: $('#usernameInput').value,
-                    password: ('#passwordInput').value
-                },
-            })
-            .done(function(data) {
-                window.location.replace('suggestions.html');
-            })
-            .fail(function(data) {
-                $('#errorMessage').css('visibility', 'visible');
-            });
-        }
+    function signin() {
+      $.ajax({
+        url: 'api/login.php',
+        type: 'POST',
+        data: {
+          username: $('#usernameInput').value,
+          password: $('#passwordInput').value
+        },
+      })
+      .done(function(data) {
+        window.location.replace('suggestions.html');
+      })
+      .fail(function(data) {
+        $('#errorMessage').show();
+      });
+    }
     </script>
     <link rel="stylesheet" href="styles/login.css">   
   </head>

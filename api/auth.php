@@ -24,8 +24,8 @@ function authenticate_user($username, $password) {
     if (check_user_exists($username, $password)) {
         // cookie expiration moment, in seconds
         $cookie_lifetime = time() + 7200;
-        setcookie("username", $requested_username, $cookie_lifetime);
-        setcookie("auth_token", create_auth_token($username, $password), $cookie_lifetime);
+        setcookie($USERNAME_COOKIE_KEY, $requested_username, $cookie_lifetime);
+        setcookie($AUTH_TOKEN_COOKIE_KEY, create_auth_token($username, $password), $cookie_lifetime);
     }
 }
 

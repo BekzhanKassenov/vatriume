@@ -1,23 +1,16 @@
 <?php
 
 require 'auth.php';
+require 'db.php';
 
 if (!is_user_authenticated()) {
     header("HTTP/1.1 401 Unauthorized");
     exit;
 }
 
-require 'secret.php';
+$db_conn = connect_to_db_or_die();
 
-// All database credentials are defined in secret.php
-$db_conn = new mysqli($db_server, $db_username, $db_password);
-
-// Check connection
-if ($db_conn->connect_error) {
-    die('Database is unavailable');
-}
-
-$statement = "SELECT * FROM suggestions";
+$statement = "SELECT * FROM suggestions LIMIT 10000";
 $rows = $db_conn->query($statement);
 
 $response = [];
@@ -32,4 +25,6 @@ while ($row = $rows->fetch_assoc()) {
 
 header("Content-Type: application/json; charset=UTF-8");
 echo json_encode(response);
+
+$db_conn->close();
 ?>

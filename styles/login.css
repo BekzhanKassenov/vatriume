@@ -93,5 +93,5 @@ body {
 .error {
 	color: red;
 	text-align: center;
-	visibility: hidden;
+	display: none;
 }
