@@ -16,5 +16,4 @@ if (authenticate_user($requested_username, $requested_password)) {
 } else {
     header("HTTP/1.1 401 Unauthorized");
 }
-var_dump($_COOKIE);
 ?>
