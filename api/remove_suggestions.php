@@ -25,6 +25,7 @@ if (isset($_GET['delete_all'])) {
 
 if ($db_conn->query($statement) !== TRUE) {
     header("HTTP/1.1 500 Internal Error");
+    echo $db_conn->error;
 } else {
     header("HTTP/1.1 200 OK");
 }
