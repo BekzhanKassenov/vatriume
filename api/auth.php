@@ -3,6 +3,7 @@
 require 'secret.php';
 
 function check_user_exists($username, $password) {
+    global $admin_credentials;
     // $admin_credentials is defined in secret.php
     if (!array_key_exists($username, $admin_credentials)) {
         return false;
@@ -13,23 +14,30 @@ function check_user_exists($username, $password) {
     return true;
 }
 
-$USERNAME_COOKIE_KEY = "username";
-$AUTH_TOKEN_COOKIE_KEY = "auth_token";
+$USERNAME_COOKIE_KEY = "va_username";
+$AUTH_TOKEN_COOKIE_KEY = "va_auth_token";
 
 function create_auth_token($username, $password) {
     return hash("sha256", $username + $password);
 }
 
 function authenticate_user($username, $password) {
+    global $USERNAME_COOKIE_KEY;
+    global $AUTH_TOKEN_COOKIE_KEY;
+
     if (check_user_exists($username, $password)) {
-        // cookie expiration moment, in seconds
-        $cookie_lifetime = time() + 7200;
-        setcookie($USERNAME_COOKIE_KEY, $requested_username, $cookie_lifetime);
-        setcookie($AUTH_TOKEN_COOKIE_KEY, create_auth_token($username, $password), $cookie_lifetime);
+        $expiration_time = time() + 72000;
+        setcookie($USERNAME_COOKIE_KEY, $username, $expiration_time, '/');
+        setcookie($AUTH_TOKEN_COOKIE_KEY, create_auth_token($username, $password), $expiration_time, '/');
+        return true;
     }
+    return false;
 }
 
 function is_user_authenticated() {
+    global $USERNAME_COOKIE_KEY;
+    global $AUTH_TOKEN_COOKIE_KEY;
+
     if (!isset($_COOKIE[$USERNAME_COOKIE_KEY])) {
         return false;
     }
@@ -39,6 +47,8 @@ function is_user_authenticated() {
         return false;
     }
     $auth_token = $_COOKIE[$AUTH_TOKEN_COOKIE_KEY];
+
+    global $admin_credentials;
 
     if (!array_key_exists($username, $admin_credentials)) {
         return false;

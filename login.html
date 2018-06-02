@@ -15,8 +15,8 @@
         url: 'api/login.php',
         type: 'POST',
         data: {
-          username: $('#usernameInput').value,
-          password: $('#passwordInput').value
+          username: $('#usernameInput').val(),
+          password: $('#passwordInput').val()
         },
       })
       .done(function(data) {
