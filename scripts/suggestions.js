@@ -10,10 +10,10 @@ function loadSuggestions() {
     type: 'GET'
   }).done(function(data) {
     var found = false;
-    for (suggestion in data) {
+    $.each(data, function (idx, suggestion) {
       displayNext(suggestion);
       found = true;
-    }
+    });
 
     if (!found) {
       $('#suggestionLoaderInfo').text('Пусто :(')
@@ -24,20 +24,22 @@ function loadSuggestions() {
   }).fail(function(error) {
     if (error.status == 401) {
       window.location.replace('login.html');
+    } else {
+      $('#suggestionLoaderInfo').text('Ошибочка...')
     }
   });
 }
 
-function displayNext(data) {
-  $('#suggestionLoaderInfo').hide()
+function displayNext(suggestion) {
+  $('#suggestionLoaderInfo').hide();
 
-  data.copyText = data.text.replace(new RegExp("\"", 'g'), "\'");
-  data.text = data.text.replace(/(?:\r\n|\r|\n)/g, '<br />');
-  if (["vatriume", "ladies", "market", "tumba"].indexOf(data.destination) == -1) {
-    data.destination = "vatriume";
+  suggestion.copyText = suggestion.text.replace(new RegExp("\"", 'g'), "\'");
+  suggestion.text = suggestion.text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+  if (["vatriume", "ladies", "market", "tumba"].indexOf(suggestion.destination) == -1) {
+    suggestion.destination = "vatriume";
   }
 
-  $("#suggestionsDivId").append(Mustache.render($('#suggestionTemplate').html(), data));
+  $("#suggestionsDivId").append(Mustache.render($('#suggestionTemplate').html(), suggestion));
 }
 
 function removeSuggestion(idToDelete) {

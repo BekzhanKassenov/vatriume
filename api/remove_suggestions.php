@@ -8,7 +8,7 @@ if (!is_user_authenticated()) {
     exit;
 }
 
-if (!isset($_GET['id']) || !isset($_GET['delete_all'])) {
+if (!isset($_GET['id']) && !isset($_GET['delete_all'])) {
     header("HTTP/1.1 400 Bad Request");
     exit;
 }
