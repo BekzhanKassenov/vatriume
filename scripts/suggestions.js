@@ -1,4 +1,7 @@
 function loadSuggestions() {
+  // Init ClipboardJS
+  new Clipboard('.btn');
+
   $('#suggestionLoaderInfo').text("Загружаю, подождите...");
 
   // Cache Mustache template
@@ -33,8 +36,9 @@ function loadSuggestions() {
 function displayNext(suggestion) {
   $('#suggestionLoaderInfo').hide();
 
-  suggestion.copyText = suggestion.text.replace(new RegExp("\"", 'g'), "\'");
   suggestion.text = suggestion.text.replace(/(?:\\r\\n|\\r|\\n)/g, '\n');
+  suggestion.copyText = suggestion.text.replace(new RegExp("\"", 'g'), "\'");
+
   if (["vatriume", "ladies", "market", "tumba"].indexOf(suggestion.destination) == -1) {
     suggestion.destination = "vatriume";
   }
