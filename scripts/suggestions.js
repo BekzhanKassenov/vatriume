@@ -34,7 +34,7 @@ function displayNext(suggestion) {
   $('#suggestionLoaderInfo').hide();
 
   suggestion.copyText = suggestion.text.replace(new RegExp("\"", 'g'), "\'");
-  suggestion.text = suggestion.text.replace(/(?:\r\n|\r|\n)/g, '<br />');
+  suggestion.text = suggestion.text.replace(/(?:\\r\\n|\\r|\\n)/g, '\n');
   if (["vatriume", "ladies", "market", "tumba"].indexOf(suggestion.destination) == -1) {
     suggestion.destination = "vatriume";
   }
