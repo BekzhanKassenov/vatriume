@@ -8,15 +8,6 @@ if (!is_user_authenticated()) {
     exit;
 }
 
-header("Content-Type: application/json; charset=UTF-8");
-echo json_encode([[
-    'id' => 'id',
-    'text' => 'asdsadasd\nasdasda\n',
-    'timestamp' => 'asdad',
-    'destination' => 'vatriume'
-]]);
-die;
-
 $db_conn = connect_to_db_or_die();
 
 $statement = "SELECT * FROM suggestions LIMIT 10000;";
