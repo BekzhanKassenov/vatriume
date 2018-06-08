@@ -14,7 +14,7 @@
     <script src="scripts/mustache.min.js"></script>
     <script id="suggestionTemplate" type="x-tmpl-mustache">
         <div class="{{destination}}" id="{{id}}">
-            <pre> {{text}} <br/> </pre>
+            <pre class="suggestionTextPre"> {{text}} <br/> </pre>
             <span class="label label-info">{{timestamp}}</span>
             <button class="btn btn-danger" onclick="removeSuggestion('{{id}}')">
                 Стереть
