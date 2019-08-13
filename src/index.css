@@ -124,19 +124,6 @@ label{
   opacity: 1;
 }
 
-footer{
-  text-align: center;
-  font-size: 14px;
-  font-weight: bold;
-  opacity: .6;
-  padding-top: 32px;
-}
-
-footer a{
-  color: #0070F3;
-  text-decoration: none;
-}
-
 @media (max-width: 632px){
   label{
     font-size: 16px;
