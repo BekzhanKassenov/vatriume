@@ -96,7 +96,6 @@ class App extends Component {
                     </div>
                     <button className="button">Предложить запись</button>
                 </form>
-                <footer>made by <a href="https://vk.com/nuwdc">NUWDC</a></footer>
                 <div className={this.state.notify ? "notify show" : "notify"}>{this.state.notifyText}</div>
             </div>
         );
