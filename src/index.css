@@ -17,7 +17,7 @@ body {
   color: #ffffff;
 }
 
-.App.white {
+.white.App {
   color: #000000;
 }
 
@@ -56,7 +56,7 @@ label{
   outline: none!important;
 }
 
-#text.white {
+.white #text {
   background-color: rgba(196,196,196,0.2);
   color: #000;
 }
@@ -69,7 +69,7 @@ label{
   overflow: hidden;
 }
 
-.switch.white {
+.white .switch {
   background-color: rgba(196,196,196,0.2);
 }
 
@@ -79,13 +79,14 @@ label{
   text-align: center;
   cursor: pointer;
   transition: background-color .2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .switch-item.selected{
   background-color: #0070F3;
 }
 
-.switch-item.selected.white {
+.white .switch-item.selected {
   background-color: rgba(255,178,178,0.5);
 }
 
@@ -109,7 +110,7 @@ label{
   transition: background-color .2s ease, box-shadow .2s ease;
 }
 
-.button.white {
+.white .button {
   background-color: rgba(255,178,178,0.5);
   color: #000;  
 }
@@ -118,7 +119,7 @@ label{
   box-shadow: 0 8px 32px -4px rgba(0, 113, 243, 0.32);
 }
 
-.button.white:focus {
+.white .button:focus {
   box-shadow: 0 8px 32px -4px rgba(255,178,178,0.6);
 }
 
@@ -126,7 +127,7 @@ label{
   background-color: #0278ff;
 }
 
-.button.white:hover {
+.white .button:hover {
   background-color: rgba(255,178,178,0.6);
 }
 
@@ -154,7 +155,7 @@ label{
   box-shadow: 0 -4px 16px 0 rgba(0,0,0,.08);
 }
 
-.notify.white {
+.white .notify {
   background-color: rgba(255,178,178,0.5);
   color: #000;
 }
@@ -180,6 +181,7 @@ label{
   border-radius: 30px;
   position: relative;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .toggler-image {

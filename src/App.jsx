@@ -31,7 +31,7 @@ class App extends Component {
             text: "",
             destination: "vatriume",
             notify: false,
-            whiteTheme: false
+            whiteTheme: false,
         };
         this.check = this.check.bind(this)
         this.generateClass = this.generateClass.bind(this)
@@ -52,8 +52,7 @@ class App extends Component {
         e.preventDefault()
         this.setState(prevState => {
             document.body.style.background = prevState.whiteTheme ? "#222222" : "#ffffff"
-            const theme = localStorage.getItem("theme") || "dark"
-            localStorage.setItem("theme", theme === "dark" ? "white" : "dark")
+            localStorage.setItem("theme", prevState.whiteTheme ? "dark" : "white")
             return {
                 whiteTheme: !prevState.whiteTheme
             }
@@ -94,15 +93,14 @@ class App extends Component {
     }
     render() {
         return (
-            <div className={this.generateClass("App")}>
+            <div className={"App" + (this.state.whiteTheme ? " white" : "")}>
                 <form onSubmit={e=>{
                   e.preventDefault()
                   this.check()
-                }} className={this.generateClass("container")}>
+                }} className="container">
                     <img className="logo" src={this.state.whiteTheme ? blackLogo : whiteLogo} alt="VA Logo" />
                     <div className="row">
                         <label htmlFor="text">Текст записи:</label>
-                        {/* <button className="toggler" onClick={this.toggleTheme}>Toggle</button> */}
                         <div className="toggler" onClick={this.toggleTheme}>
                             <img 
                                 src={moon} 
@@ -133,7 +131,6 @@ class App extends Component {
                     <textarea
                         placeholder="Напишите что-нибудь…"
                         id="text"
-                        className={this.generateClass()}
                         onChange={e =>
                             this.setState({
                                 text: e.target.value,
@@ -143,7 +140,7 @@ class App extends Component {
                         value={this.state.text}
                     />
                     <label>Эта запись предназначена для:</label>
-                    <div className={this.generateClass("switch")}>
+                    <div className="switch">
                         {dests.map(el => (
                             <div
                                 key={el.value}
@@ -152,15 +149,15 @@ class App extends Component {
                                         destination: el.value
                                     })
                                 }
-                                className={this.generateClass(this.state.destination === el.value ? "switch-item selected" : "switch-item")}
+                                className={this.state.destination === el.value ? "switch-item selected" : "switch-item"}
                             >
                                 {el.label}
                             </div>
                         ))}
                     </div>
-                    <button className={this.generateClass("button")}>Предложить запись</button>
+                    <button className="button">Предложить запись</button>
                 </form>
-                <div className={this.generateClass(this.state.notify ? "notify show" : "notify")}>{this.state.notifyText}</div>
+                <div className={this.state.notify ? "notify show" : "notify"}>{this.state.notifyText}</div>
             </div>
         );
     }
