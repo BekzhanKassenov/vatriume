@@ -64,7 +64,7 @@ class App extends Component {
       this.notify("Запись пуста");
     } else {
       axios({
-        url: "http://vatriume.kz/api/store_suggestion.php",
+        url: "/api/store_suggestion.php",
         method: "GET",
         params: {
           text: this.state.text,
