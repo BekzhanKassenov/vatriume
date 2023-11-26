@@ -18,7 +18,7 @@ $USERNAME_COOKIE_KEY = "va_username";
 $AUTH_TOKEN_COOKIE_KEY = "va_auth_token";
 
 function create_auth_token($username, $password) {
-    return hash("sha256", $username + $password);
+    return hash("sha256", $username . $password);
 }
 
 function authenticate_user($username, $password) {
